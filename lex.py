@@ -13,8 +13,11 @@ reserved = {
     'verificar': 'VERIFICAR',
     'para': 'PARA',
     'todos': 'TODOS',
-    'True': 'TRUE',
-    'False': 'FALSE'
+
+    'True': 'BOOL',
+    'False': 'BOOL',
+    'TRUE': 'BOOL',
+    'FALSE': 'BOOL'
 }
 
 tokens = [
@@ -37,10 +40,10 @@ tokens = [
     'NEQ',          # !=
     'GT',           # >
     'GE',           # >=
-    'LT',           # <=
+    'LT',           # <
     'LE',           # <=
     'AND',          # &&
-] + list(reserved.values())
+] + list(set(reserved.values()))
 
 # -- Some Regex -- 
 
@@ -71,6 +74,10 @@ def t_NUM(t):
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, "ID")
+
+    if t.type == 'BOOL':
+        t.value = t.value.lower() == 'true'
+
     return t
 
 def t_STRING(t):
@@ -106,7 +113,6 @@ if __name__ == '__main__':
                 set estado_ventilador = verificar(ventilador).
                 se estado_ventilador == 0 entao ligar ventilador.
                 set potencia = 90.
-            .
         ''',
 
         "Teste 3: Operador Lógico, Broadcast e Concatenação": '''
@@ -138,8 +144,16 @@ if __name__ == '__main__':
                 ligar umidificador.
                 enviar alerta ("Nivel critico atingido") celular.
                 set estado_janela = verificar(janela).
-            .
-        '''
+        ''',
+
+        "Teste 6: Booleanos": '''
+            dispositivo: {lampada, movimento}
+            set movimento = True.
+            set sensor_ativo = False.
+            se movimento == True entao ligar lampada.
+            se sensor_ativo != False entao desligar lampada.
+        ''',
+
     }
 
     for test_name, code in tests.items():

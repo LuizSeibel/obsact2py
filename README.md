@@ -24,7 +24,7 @@ To ensure absolute stability, the compiler is built incrementally using a test-d
 
 ### Phase 2: Structural Foundation & Environment 
 - [x] **Boilerplate and Auxiliary Runtime (`aux.py`)** Establishing the targeted execution runtime containing predefined Python wrappers for `ligar()`, `desligar()`, `verificar()`, and `alerta()`.
-- [ ] **Device Definitions & Basic AST Generation** Building the core parser rules to construct Abstract Syntax Tree (AST) sub-nodes from basic `DEVICE` and simple linear `set` assignments.
+- [x] **Device Definitions & Basic AST Generation** Building the core parser rules to construct Abstract Syntax Tree (AST) sub-nodes from basic `DEVICE` and simple linear `set` assignments.
 
 ### Phase 3: Advanced Semantics & Syntax Scaling 
 - [ ] **String Concatenation Rules** Handling embedded evaluations in communication semantics, automatically unpacking pairs of string constants and variable identifiers inside alert clauses.
