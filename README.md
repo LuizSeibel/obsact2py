@@ -17,24 +17,44 @@ This project was developed as part of the final assignment for the **INF1022 (AN
 
 ## Development Roadmap & Implementation Strategy
 
-To ensure absolute stability, the compiler is built incrementally using a test-driven approach, scaling from core low-level mechanics to advanced syntax transformations.
-
 ### Phase 1: Lexical Analysis 
-- [x] **Tokens and Regex Mappings (`lex.py`)** Deconstruction of source streams into explicit terminal families (keywords like `dispositivo`, `set`, operators like `==`, `&&`, string literals, and identifiers). Implemented using PLY reflection.
+- [x] **Tokens and Regex Mappings (`lex.py`)** 
+    Defined the lexical layer responsible for converting ObsAct source code into explicit token families, including reserved keywords such as dispositivo and set, logical and relational operators such as == and &&, string literals, numeric values, booleans, and identifiers.
 
 ### Phase 2: Structural Foundation & Environment 
-- [x] **Boilerplate and Auxiliary Runtime (`aux.py`)** Establishing the targeted execution runtime containing predefined Python wrappers for `ligar()`, `desligar()`, `verificar()`, and `alerta()`.
-- [x] **Device Definitions & Basic AST Generation** Building the core parser rules to construct Abstract Syntax Tree (AST) sub-nodes from basic `DEVICE` and simple linear `set` assignments.
+- [x] **Boilerplate and Auxiliary Runtime (`aux.py`)** 
+    Established the target Python runtime with predefined helper functions for device interaction and alert handling, including ligar(), desligar(), verificar(), and alerta().
+- [x] **Device Definitions & Basic AST Generation(`parser.py`)**
+    Implemented the initial parser rules for device declarations, observation bindings, linear assignments, and basic command nodes, producing structured Abstract Syntax Tree (AST) representations for later code generation.
 
 ### Phase 3: Advanced Semantics & Syntax Scaling 
-- [ ] **String Concatenation Rules** Handling embedded evaluations in communication semantics, automatically unpacking pairs of string constants and variable identifiers inside alert clauses.
-- [ ] **Broadcast Architecture (`para todos:`)** Expanding the grammatic definitions to support variable-length identifier collections, emitting deterministic execution loops to map single instructions across plural targets.
-- [ ] **Logical Expressions & Precedences** Integrating relational sub-trees with conditional chaining operators (`&&`), carefully balancing shifting boundaries to cleanly emit standard Python `if/elif/else` structures.
+- [x] **Parameterized Alert Messages**
+    Added support for alert clauses with optional observation variables, allowing commands such as enviar alerta ("Temperatura em", temperatura) Celular. to be transpiled into Python alert calls with dynamic values.
+- [x] **Broadcast Alert Support (`para todos:`)**
+    Extended the grammar with variable-length device target lists, allowing a single ObsAct alert command to be expanded into multiple Python alerta() calls, one for each target device.
+- [x] **Logical Expressions & Conditional Chains**
+    Implemented relational condition parsing with chained logical expressions using &&, enabling ObsAct conditions to be translated into equivalent Python boolean expressions inside if and else structures.
 
 ### Phase 4: Symbol Tracking & Optimization 
-- [ ] **Zero-Initialization Symbol Table** Enforcing a compiler-level safeguard that tracks all declared observations across the compilation context, automatically injecting a default `0` assignment for variables that lack explicit initialization.
-- [ ] **Grammar Optimization & LALR(1) Convergence (`parser.py`)** Refactoring grammar rules to prevent left-recursion loops and resolve Shift/Reduce ambiguities native to conditional branches.
+- [x] **Observation Initialization Pass**
+    Added automatic initialization for declared observations, ensuring that each observation variable starts with a default 0 value when no explicit assignment is provided before code generation.
+- [x] **Indentation-Aware Conditional Blocks (`parser.py`)**
+    Refactored the grammar to support nested se ... entao blocks through synthetic INDENT and DEDENT markers, resolving ambiguous conditional grouping while keeping the ObsAct surface syntax unchanged.
+- [x] **Python Code Generation (`generator.py`)**
+    Implemented AST traversal routines that convert ObsAct declarations, assignments, device actions, alerts, broadcast alerts, verification calls, and nested conditionals into executable Python code.
 
+### Phase 5: Physical Hardware Integration
+- [ ] **Arduino Runtime Integration (`arduino_aux.py`)**  
+  Extend the generated Python runtime to communicate with an Arduino board through serial communication, enabling ObsAct commands such as `ligar led.` and `desligar led.` to control a real LED circuit.
+
+- [ ] **Device-to-Pin Mapping**  
+  Add a hardware mapping layer that associates declared ObsAct devices with Arduino digital pins, allowing device names from the language to be translated into physical outputs.
+
+- [ ] **Serial Command Protocol**  
+  Define a simple communication protocol between Python and Arduino, using commands such as `ON:led`, `OFF:led`, or `READ:sensor` to trigger physical behavior from generated Python code.
+
+- [ ] **End-to-End Hardware Demo**  
+  Build a complete ObsAct program that declares an LED device, transpiles the source code to Python, sends commands to Arduino, and physically turns the LED on or off.
 ---
 
 ## Tech Stack & Architecture

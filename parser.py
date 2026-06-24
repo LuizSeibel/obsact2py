@@ -23,7 +23,23 @@ def p_device_obs(p):
     '''DEVICE : DISPOSITIVO COLON LBRACE ID COMMA ID RBRACE'''
     p[0] = {'type': 'declaration', 'device_name': p[4], 'observation': p[6]}
 
+def p_id(p):
+    '''ID_LIST : ID COMMA ID_LIST
+               | ID'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
+
 # -- CMD RULES --
+
+def p_block(p):
+    '''BLOCK : INDENT CMDS DEDENT
+             | CMD'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[2]
 
 def p_cmds_multiple(p):
     '''CMDS : CMD CMDS'''
@@ -68,7 +84,6 @@ def p_act_execute(p):
     '''ACTEXECUTE : ACTION ID'''
     p[0] = {'type': 'execute', 'action': p[1], 'target': p[2]}
 
-
 def p_act_alert_simple(p):
     '''ACTALERT : ENVIAR ALERTA LPAREN STRING RPAREN ID'''
     p[0] = {'type': 'alert', 'message': p[4], 'var_obs': None, 'target': p[6]}
@@ -76,7 +91,14 @@ def p_act_alert_simple(p):
 def p_act_alert_var(p):
     '''ACTALERT : ENVIAR ALERTA LPAREN STRING COMMA ID RPAREN ID'''
     p[0] = {'type': 'alert', 'message': p[4], 'var_obs': p[6], 'target': p[8]}
+    
+def p_act_alert_broadcast(p):
+    '''ACTALERT : ENVIAR ALERTA LPAREN STRING RPAREN PARA TODOS COLON ID_LIST'''
+    p[0] = {'type': 'broadcast_alert', 'message': p[4], 'var_obs': None, 'target': p[9]}
 
+def p_act_alert_broadcast_var(p):
+    '''ACTALERT : ENVIAR ALERTA LPAREN STRING COMMA ID RPAREN PARA TODOS COLON ID_LIST'''
+    p[0] = {'type': 'broadcast_alert', 'message': p[4], 'var_obs': p[6], 'target': p[11]}
 
 def p_verify_call(p):
     '''VERIFYCALL : VERIFICAR LPAREN ID RPAREN'''
@@ -89,11 +111,11 @@ def p_attrib_verify(p):
 # -- Condicionais --
 
 def p_obsact_if(p):
-    '''OBSACT : SE OBS ENTAO CMDS'''
+    '''OBSACT : SE OBS ENTAO BLOCK'''
     p[0] = {'type': 'conditional_if', 'condition': p[2], 'commands_0': p[4]}
 
 def p_obsact_if_else(p):
-    '''OBSACT : SE OBS ENTAO CMDS SENAO CMDS'''
+    '''OBSACT : SE OBS ENTAO BLOCK SENAO BLOCK'''
     p[0] = {'type': 'conditional_if_else', 'condition': p[2], 'commands_0': p[4], 'commands_1': p[6]}
 
 def p_obs_simple(p):

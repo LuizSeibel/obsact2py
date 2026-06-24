@@ -43,6 +43,10 @@ tokens = [
     'LT',           # <
     'LE',           # <=
     'AND',          # &&
+
+    # Extras
+    'INDENT',
+    'DEDENT'
 ] + list(set(reserved.values()))
 
 # -- Some Regex -- 
@@ -65,6 +69,9 @@ t_ASSIGN  = r'='
 t_AND     = r'&&'
 
 t_ignore  = ' \t'
+
+t_INDENT = r'<INDENT>'
+t_DEDENT = r'<DEDENT>'
 
 def t_NUM(t):
     r'\d+'
