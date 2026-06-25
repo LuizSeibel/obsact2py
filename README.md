@@ -4,6 +4,8 @@ A transpiler that translates **ObsAct** (Sensor Automation Description Language)
 
 This project was developed as part of the final assignment for the **INF1022 — Analisadores Léxicos e Sintáticos** course at **PUC-Rio**.
 
+**Arduino hardware demo:** [Watch on YouTube](https://youtube.com/shorts/UH53ignHE0I?is=ZcYn7KYEKrGa32HC)
+
 ---
 
 ## Features & Language Specification
