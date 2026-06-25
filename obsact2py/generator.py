@@ -1,15 +1,25 @@
 
-def generate_program(ast):
+def generate_program(ast, arduino):
     lines = []
 
-    lines.append("from aux import ligar, desligar, verificar, alerta")
-    lines.append("")
+    if arduino:
+        lines.append("from obsact2py.runtime.inoaux import ligar, desligar, verificar, alerta")
+        lines.append("import time")
+    else:
+        lines.append("from obsact2py.runtime.aux import ligar, desligar, verificar, alerta")
+        lines.append("")
 
     lines.extend(generate_device_init(ast["devices"]))
     lines.append("")
 
-    for cmd in ast["commands"]:
-        lines.extend(generate_command(cmd, indent=0))
+    if arduino:
+        lines.append("while True:")
+        for cmd in ast["commands"]:
+            lines.extend(generate_command(cmd, indent=1))
+        lines.append(f"{tab(1)}time.sleep(0.1)")
+    else:
+        for cmd in ast["commands"]:
+            lines.extend(generate_command(cmd, indent=0))
 
     return "\n".join(lines)
 

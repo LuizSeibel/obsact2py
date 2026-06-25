@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from lex import tokens
+from obsact2py.lex import tokens
 
 def p_program(p):
     '''PROGRAM : DEVICES CMDS'''

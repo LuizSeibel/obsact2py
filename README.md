@@ -42,19 +42,6 @@ This project was developed as part of the final assignment for the **INF1022 (AN
     Refactored the grammar to support nested se ... entao blocks through synthetic INDENT and DEDENT markers, resolving ambiguous conditional grouping while keeping the ObsAct surface syntax unchanged.
 - [x] **Python Code Generation (`generator.py`)**
     Implemented AST traversal routines that convert ObsAct declarations, assignments, device actions, alerts, broadcast alerts, verification calls, and nested conditionals into executable Python code.
-
-### Phase 5: Physical Hardware Integration
-- [ ] **Arduino Runtime Integration (`arduino_aux.py`)**  
-  Extend the generated Python runtime to communicate with an Arduino board through serial communication, enabling ObsAct commands such as `ligar led.` and `desligar led.` to control a real LED circuit.
-
-- [ ] **Device-to-Pin Mapping**  
-  Add a hardware mapping layer that associates declared ObsAct devices with Arduino digital pins, allowing device names from the language to be translated into physical outputs.
-
-- [ ] **Serial Command Protocol**  
-  Define a simple communication protocol between Python and Arduino, using commands such as `ON:led`, `OFF:led`, or `READ:sensor` to trigger physical behavior from generated Python code.
-
-- [ ] **End-to-End Hardware Demo**  
-  Build a complete ObsAct program that declares an LED device, transpiles the source code to Python, sends commands to Arduino, and physically turns the LED on or off.
 ---
 
 ## Tech Stack & Architecture

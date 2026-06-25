@@ -23,8 +23,9 @@ def verificar(namedevice):
         return -1
 
 def alerta(namedevice, msg, var=None):
-    print(namedevice + " recebeu o alerta:\n")
+    print(namedevice + " recebeu o alerta: ")
     if var is not None:
         print(msg + " " + str(var))
     else:
         print(msg)
+    print("\n")
