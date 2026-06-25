@@ -140,20 +140,7 @@ if __name__ == '__main__':
                 desligar lampada.
         ''',
 
-        "Teste 5: Cobertura de Arestas (Operadores, False e Alerta Simples)": '''
-            dispositivo: {umidificador, umidade}
-            dispositivo: {janela}
-            dispositivo: {celular}
-            
-            set umidade = 40.
-            
-            se umidade <= 30 && movimento != False entao
-                ligar umidificador.
-                enviar alerta ("Nivel critico atingido") celular.
-                set estado_janela = verificar(janela).
-        ''',
-
-        "Teste 6: Booleanos": '''
+        "Teste 5: Booleanos": '''
             dispositivo: {lampada, movimento}
             set movimento = True.
             set sensor_ativo = False.

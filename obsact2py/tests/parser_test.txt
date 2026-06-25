@@ -1,0 +1,835 @@
+
+================================================================================
+Teste 1: Programa mínimo com dispositivo e ação
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "ventilador",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "execute",
+      "action": "ligar",
+      "target": "ventilador"
+    }
+  ]
+}
+
+================================================================================
+Teste 2: Declaração com observation e atribuição numérica
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 40
+    }
+  ]
+}
+
+================================================================================
+Teste 3: Booleano em atribuição
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "lampada",
+      "observation": "movimento"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "movimento",
+      "value": true
+    }
+  ]
+}
+
+================================================================================
+Teste 4: Condicional simples com número
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    },
+    {
+      "type": "declaration",
+      "device_name": "ventilador",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 40
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "temperatura",
+        "oplogic": ">",
+        "right": 30
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "ventilador"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 5: Condicional simples com booleano
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "lampada",
+      "observation": "movimento"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "movimento",
+      "value": true
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "movimento",
+        "oplogic": "==",
+        "right": true
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "lampada"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 6: Condicional com senao
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "lampada",
+      "observation": "movimento"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "movimento",
+      "value": false
+    },
+    {
+      "type": "conditional_if_else",
+      "condition": {
+        "left": "movimento",
+        "oplogic": "==",
+        "right": true
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "lampada"
+        }
+      ],
+      "commands_1": [
+        {
+          "type": "execute",
+          "action": "desligar",
+          "target": "lampada"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 7: Operador lógico AND com número e booleano
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "lampada",
+      "observation": "movimento"
+    },
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "movimento",
+      "value": true
+    },
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 35
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "temperatura",
+        "oplogic": ">",
+        "right": 30,
+        "and": {
+          "left": "movimento",
+          "oplogic": "==",
+          "right": true
+        }
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "lampada"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 8: Alerta simples com mensagem
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Celular",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "alert",
+      "message": "Hora de acordar!",
+      "var_obs": null,
+      "target": "Celular"
+    }
+  ]
+}
+
+================================================================================
+Teste 9: Alerta com concatenação de observation
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 37
+    },
+    {
+      "type": "alert",
+      "message": "Temperatura esta em",
+      "var_obs": "temperatura",
+      "target": "Termometro"
+    }
+  ]
+}
+
+================================================================================
+Teste 10: Bloco condicional com múltiplos comandos
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    },
+    {
+      "type": "declaration",
+      "device_name": "ventilador",
+      "observation": "potencia"
+    },
+    {
+      "type": "declaration",
+      "device_name": "Celular",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 40
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "temperatura",
+        "oplogic": ">",
+        "right": 30
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "ventilador"
+        }
+      ]
+    },
+    {
+      "type": "assignment",
+      "var": "potencia",
+      "value": 90
+    },
+    {
+      "type": "alert",
+      "message": "Temperatura alta",
+      "var_obs": "temperatura",
+      "target": "Celular"
+    }
+  ]
+}
+
+================================================================================
+Teste 11: Condicional aninhado
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    },
+    {
+      "type": "declaration",
+      "device_name": "ventilador",
+      "observation": "potencia"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 40
+    },
+    {
+      "type": "assignment",
+      "var": "potencia",
+      "value": 0
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "temperatura",
+        "oplogic": ">",
+        "right": 30
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "ventilador"
+        }
+      ]
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "potencia",
+        "oplogic": "==",
+        "right": 0
+      },
+      "commands_0": [
+        {
+          "type": "assignment",
+          "var": "potencia",
+          "value": 90
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 12: Verificar em atribuição
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "ventilador",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "estado_ventilador",
+      "value": {
+        "type": "verify",
+        "target": "ventilador"
+      }
+    }
+  ]
+}
+
+================================================================================
+Teste 13: Verificar dentro de condição
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "umidificador",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": {
+          "type": "verify",
+          "target": "umidificador"
+        },
+        "oplogic": "==",
+        "right": 0
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "umidificador"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 14: Verificar com AND
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "umidificador",
+      "observation": null
+    },
+    {
+      "type": "declaration",
+      "device_name": "sensor",
+      "observation": "umidade"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "umidade",
+      "value": 35
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": {
+          "type": "verify",
+          "target": "umidificador"
+        },
+        "oplogic": "==",
+        "right": 0,
+        "and": {
+          "left": "umidade",
+          "oplogic": "<",
+          "right": 40
+        }
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "umidificador"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 15: Operadores lógicos completos
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "sensor",
+      "observation": "valor"
+    },
+    {
+      "type": "declaration",
+      "device_name": "atuador",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "valor",
+      "value": 10
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "valor",
+        "oplogic": ">",
+        "right": 5
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "atuador"
+        }
+      ]
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "valor",
+        "oplogic": "<",
+        "right": 20
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "desligar",
+          "target": "atuador"
+        }
+      ]
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "valor",
+        "oplogic": ">=",
+        "right": 10
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "atuador"
+        }
+      ]
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "valor",
+        "oplogic": "<=",
+        "right": 10
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "desligar",
+          "target": "atuador"
+        }
+      ]
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "valor",
+        "oplogic": "==",
+        "right": 10
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "atuador"
+        }
+      ]
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "valor",
+        "oplogic": "!=",
+        "right": 0
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "desligar",
+          "target": "atuador"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 16: Programa maior misturando recursos
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    },
+    {
+      "type": "declaration",
+      "device_name": "lampada",
+      "observation": "movimento"
+    },
+    {
+      "type": "declaration",
+      "device_name": "ventilador",
+      "observation": "potencia"
+    },
+    {
+      "type": "declaration",
+      "device_name": "Celular",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 41
+    },
+    {
+      "type": "assignment",
+      "var": "movimento",
+      "value": true
+    },
+    {
+      "type": "assignment",
+      "var": "potencia",
+      "value": 0
+    },
+    {
+      "type": "conditional_if",
+      "condition": {
+        "left": "temperatura",
+        "oplogic": ">",
+        "right": 30,
+        "and": {
+          "left": "movimento",
+          "oplogic": "==",
+          "right": true
+        }
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "ventilador"
+        }
+      ]
+    },
+    {
+      "type": "assignment",
+      "var": "potencia",
+      "value": 90
+    },
+    {
+      "type": "alert",
+      "message": "Temperatura detectada",
+      "var_obs": "temperatura",
+      "target": "Celular"
+    },
+    {
+      "type": "conditional_if_else",
+      "condition": {
+        "left": "movimento",
+        "oplogic": "==",
+        "right": false
+      },
+      "commands_0": [
+        {
+          "type": "execute",
+          "action": "desligar",
+          "target": "lampada"
+        }
+      ],
+      "commands_1": [
+        {
+          "type": "execute",
+          "action": "ligar",
+          "target": "lampada"
+        }
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 17: Broadcast simples
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "monitor",
+      "observation": null
+    },
+    {
+      "type": "declaration",
+      "device_name": "celular",
+      "observation": null
+    },
+    {
+      "type": "declaration",
+      "device_name": "tablet",
+      "observation": null
+    }
+  ],
+  "commands": [
+    {
+      "type": "broadcast_alert",
+      "message": "Sistema iniciado",
+      "var_obs": null,
+      "target": [
+        "monitor",
+        "celular",
+        "tablet"
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 18: Broadcast com concatenação
+================================================================================
+Resultado: OK
+{
+  "type": "program",
+  "devices": [
+    {
+      "type": "declaration",
+      "device_name": "monitor",
+      "observation": null
+    },
+    {
+      "type": "declaration",
+      "device_name": "celular",
+      "observation": null
+    },
+    {
+      "type": "declaration",
+      "device_name": "Termometro",
+      "observation": "temperatura"
+    }
+  ],
+  "commands": [
+    {
+      "type": "assignment",
+      "var": "temperatura",
+      "value": 39
+    },
+    {
+      "type": "broadcast_alert",
+      "message": "Temperatura em",
+      "var_obs": "temperatura",
+      "target": [
+        "monitor",
+        "celular"
+      ]
+    }
+  ]
+}
+
+================================================================================
+Teste 19: Erro esperado - comando sem ponto
+================================================================================
+Erro de sintaxe no final do arquivo
+Resultado: ERRO ou AST nula
+
+================================================================================
+Teste 20: Erro esperado - booleano inválido em minúsculo
+================================================================================
+Erro de sintaxe próximo a 'true' na linha 116
+Resultado: ERRO ou AST nula
+
+================================================================================
+Teste 21: Erro esperado - ligar usado como expressão de condição
+================================================================================
+Erro de sintaxe próximo a 'ligar' na linha 119
+Resultado: ERRO ou AST nula
